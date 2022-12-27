@@ -97,12 +97,12 @@ final class AphrontSideNavFilterView extends AphrontView {
       ->setName($name)
       ->setType($type);
 
-    if (strlen($icon)) {
+    if (phutil_nonempty_string($icon)) {
       $item->setIcon($icon);
     }
 
 
-    if (strlen($key)) {
+    if (phutil_nonempty_string($key)) {
       $item->setKey($key);
     }
 
@@ -145,7 +145,7 @@ final class AphrontSideNavFilterView extends AphrontView {
 
   public function selectFilter($key, $default = null) {
     $this->selectedFilter = $default;
-    if ($this->menu->getItem($key) && strlen($key)) {
+    if ($this->menu->getItem($key) && phutil_nonempty_string($key)) {
       $this->selectedFilter = $key;
     }
     return $this->selectedFilter;

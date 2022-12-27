@@ -74,7 +74,7 @@ final class PhabricatorMailManagementSendTestWorkflow
     $viewer = $this->getViewer();
 
     $type = $args->getArg('type');
-    if (!strlen($type)) {
+    if (!phutil_nonempty_string($type)) {
       $type = PhabricatorMailEmailMessage::MESSAGETYPE;
     }
 

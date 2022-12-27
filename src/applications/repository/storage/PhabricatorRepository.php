@@ -217,7 +217,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
     $monograms[] = 'R'.$this->getID();
 
     $callsign = $this->getCallsign();
-    if (strlen($callsign)) {
+    if (phutil_nonempty_string($callsign)) {
       $monograms[] = 'r'.$callsign;
     }
 
@@ -345,12 +345,12 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
 
     // Make some reasonable effort to produce reasonable default directory
     // names from repository names.
-    if (!strlen($name)) {
+    if (!phutil_nonempty_string($name)) {
       $name = $this->getName();
       $name = phutil_utf8_strtolower($name);
       $name = preg_replace('@[ -/:->]+@', '-', $name);
       $name = trim($name, '-');
-      if (!strlen($name)) {
+      if (!phutil_nonempty_string($name)) {
         $name = $this->getCallsign();
       }
     }
@@ -368,7 +368,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
   }
 
   public static function assertValidRepositorySlug($slug) {
-    if (!strlen($slug)) {
+    if (!phutil_nonempty_string($slug)) {
       throw new Exception(
         pht(
           'The empty string is not a valid repository short name. '.
@@ -444,7 +444,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
   }
 
   public static function assertValidCallsign($callsign) {
-    if (!strlen($callsign)) {
+    if (!phutil_nonempty_string($callsign)) {
       throw new Exception(
         pht(
           'A repository callsign must be at least one character long.'));
@@ -721,14 +721,14 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
     $head = idx($params, 'head');
     $against = idx($params, 'against');
 
-    if ($req_commit && !strlen($commit)) {
+    if ($req_commit && !phutil_nonempty_string($commit)) {
       throw new Exception(
         pht(
           'Diffusion URI action "%s" requires commit!',
           $action));
     }
 
-    if ($req_branch && !strlen($branch)) {
+    if ($req_branch && !phutil_nonempty_string($branch)) {
       throw new Exception(
         pht(
           'Diffusion URI action "%s" requires branch!',
@@ -779,20 +779,20 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
         break;
       case 'compare':
         $uri = $this->getPathURI("/{$action}/");
-        if (strlen($head)) {
+        if (phutil_nonempty_string($head)) {
           $query['head'] = $head;
-        } else if (strlen($raw_commit)) {
+        } else if (phutil_nonempty_string($raw_commit)) {
           $query['commit'] = $raw_commit;
-        } else if (strlen($raw_branch)) {
+        } else if (phutil_nonempty_string($raw_branch)) {
           $query['head'] = $raw_branch;
         }
 
-        if (strlen($against)) {
+        if (phutil_nonempty_string($against)) {
           $query['against'] = $against;
         }
         break;
       case 'branch':
-        if (strlen($path)) {
+        if (phutil_nonempty_string($path)) {
           $uri = $this->getPathURI("/repository/{$path}");
         } else {
           $uri = $this->getPathURI('/');
@@ -1160,7 +1160,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
    */
   public function getRemoteURIObject() {
     $raw_uri = $this->getDetail('remote-uri');
-    if (!strlen($raw_uri)) {
+    if (!phutil_nonempty_string($raw_uri)) {
       return new PhutilURI('');
     }
 
@@ -2302,14 +2302,14 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
       );
       foreach ($git_env as $key) {
         $value = getenv($key);
-        if (strlen($value)) {
+        if (!is_null($value) && strlen($value)) {
           $env[$key] = $value;
         }
       }
 
       $key = 'GIT_PUSH_OPTION_COUNT';
       $git_count = getenv($key);
-      if (strlen($git_count)) {
+      if (!is_null($git_count) && strlen($git_count)) {
         $git_count = (int)$git_count;
         $env[$key] = $git_count;
         for ($ii = 0; $ii < $git_count; $ii++) {
@@ -2480,7 +2480,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
       $has_https = false;
     }
 
-    $has_ssh = (bool)strlen(PhabricatorEnv::getEnvConfig('phd.user'));
+    $has_ssh = phutil_nonempty_string(PhabricatorEnv::getEnvConfig('phd.user'));
 
     $protocol_map = array(
       PhabricatorRepositoryURI::BUILTIN_PROTOCOL_SSH => $has_ssh,
@@ -2818,7 +2818,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
     $permanent_rules = $this->getStringListForConduit($permanent_rules);
 
     $default_branch = $this->getDefaultBranch();
-    if (!strlen($default_branch)) {
+    if (!phutil_nonempty_string($default_branch)) {
       $default_branch = null;
     }
 
@@ -2849,7 +2849,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
 
     foreach ($list as $key => $value) {
       $value = (string)$value;
-      if (!strlen($value)) {
+      if (!phutil_nonempty_string($value)) {
         unset($list[$key]);
       }
     }

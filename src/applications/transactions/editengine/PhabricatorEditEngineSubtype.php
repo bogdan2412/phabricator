@@ -89,7 +89,7 @@ final class PhabricatorEditEngineSubtype
   }
 
   public function hasTagView() {
-    return (bool)strlen($this->getTagText());
+    return phutil_nonempty_string($this->getTagText());
   }
 
   public function newTagView() {

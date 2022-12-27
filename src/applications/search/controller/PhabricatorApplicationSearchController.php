@@ -115,7 +115,7 @@ final class PhabricatorApplicationSearchController
     if ($this->queryKey == 'advanced') {
       $run_query = false;
       $query_key = $request->getStr('query');
-    } else if (!strlen($this->queryKey)) {
+    } else if (!phutil_nonempty_string($this->queryKey)) {
       $found_query_data = false;
 
       if ($request->isHTTPGet() || $request->isQuicksand()) {
@@ -775,7 +775,7 @@ final class PhabricatorApplicationSearchController
     $force_nux) {
 
     // Don't render NUX if the user has clicked away from the default page.
-    if (strlen($this->getQueryKey())) {
+    if (phutil_nonempty_string($this->getQueryKey())) {
       return null;
     }
 
@@ -1022,7 +1022,7 @@ final class PhabricatorApplicationSearchController
     $object_name = pht('%s %s', $object->getMonogram(), $object->getName());
 
     // Likewise, the context object can only be a dashboard.
-    if (strlen($context_phid)) {
+    if (phutil_nonempty_string($context_phid)) {
       $context = id(new PhabricatorDashboardQuery())
         ->setViewer($viewer)
         ->withPHIDs(array($context_phid))

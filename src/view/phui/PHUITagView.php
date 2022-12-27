@@ -126,7 +126,7 @@ final class PHUITagView extends AphrontTagView {
   }
 
   protected function getTagName() {
-    return strlen($this->href) ? 'a' : 'span';
+    return phutil_nonempty_string($this->href) ? 'a' : 'span';
   }
 
   public function setContextObject($context_object) {

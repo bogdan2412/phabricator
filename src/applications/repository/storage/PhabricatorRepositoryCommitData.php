@@ -97,12 +97,12 @@ final class PhabricatorRepositoryCommitData extends PhabricatorRepositoryDAO {
     $ref = $this->getCommitRef();
 
     $author = $ref->getAuthor();
-    if (strlen($author)) {
+    if (phutil_nonempty_string($author)) {
       return $author;
     }
 
     $author = phutil_string_cast($this->authorName);
-    if (strlen($author)) {
+    if (phutil_nonempty_string($author)) {
       return $author;
     }
 
@@ -131,7 +131,7 @@ final class PhabricatorRepositoryCommitData extends PhabricatorRepositoryDAO {
     $ref = $this->getCommitRef();
 
     $committer = $ref->getCommitter();
-    if (strlen($committer)) {
+    if (phutil_nonempty_string($committer)) {
       return $committer;
     }
 
@@ -150,7 +150,7 @@ final class PhabricatorRepositoryCommitData extends PhabricatorRepositoryDAO {
     $string = $this->getCommitDetail($key);
     $string = phutil_string_cast($string);
 
-    if (strlen($string)) {
+    if (phutil_nonempty_string($string)) {
       return $string;
     }
 

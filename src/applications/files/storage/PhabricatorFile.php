@@ -288,7 +288,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
     // update the parent file if a MIME type hasn't been provided. This matters
     // for large media files like video.
     $mime_type = idx($params, 'mime-type');
-    if (!strlen($mime_type)) {
+    if (!phutil_nonempty_string($mime_type)) {
       $file->setMimeType('application/octet-stream');
     }
 
@@ -856,7 +856,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
     // instance identity in the path allows us to distinguish between requests
     // originating from different instances but served through the same CDN.
     $instance = PhabricatorEnv::getEnvConfig('cluster.instance');
-    if (strlen($instance)) {
+    if (phutil_nonempty_string($instance)) {
       $parts[] = '@'.$instance;
     }
 
@@ -903,7 +903,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
     $parts[] = 'xform';
 
     $instance = PhabricatorEnv::getEnvConfig('cluster.instance');
-    if (strlen($instance)) {
+    if (phutil_nonempty_string($instance)) {
       $parts[] = '@'.$instance;
     }
 
@@ -1278,7 +1278,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
   public function getAltText() {
     $alt = $this->getCustomAltText();
 
-    if (strlen($alt)) {
+    if (phutil_nonempty_string($alt)) {
       return $alt;
     }
 
@@ -1292,7 +1292,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
   public function setCustomAltText($value) {
     $value = phutil_string_cast($value);
 
-    if (!strlen($value)) {
+    if (!phutil_nonempty_string($value)) {
       $value = null;
     }
 
@@ -1309,7 +1309,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
     $parts = array();
 
     $name = $this->getName();
-    if (strlen($name)) {
+    if (phutil_nonempty_string($name)) {
       $parts[] = $name;
     }
 

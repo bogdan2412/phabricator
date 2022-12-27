@@ -131,11 +131,11 @@ final class DiffusionCommitRef extends Phobject {
   }
 
   private function formatUser($name, $email) {
-    if (strlen($name) && strlen($email)) {
+    if (phutil_nonempty_string($name) && phutil_nonempty_string($email)) {
       return "{$name} <{$email}>";
-    } else if (strlen($email)) {
+    } else if (phutil_nonempty_string($email)) {
       return $email;
-    } else if (strlen($name)) {
+    } else if (phutil_nonempty_string($name)) {
       return $name;
     } else {
       return null;

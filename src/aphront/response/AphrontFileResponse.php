@@ -19,7 +19,7 @@ final class AphrontFileResponse extends AphrontResponse {
   }
 
   public function setDownload($download) {
-    if (!strlen($download)) {
+    if (!phutil_nonempty_string($download)) {
       $download = 'untitled';
     }
     $this->download = $download;
@@ -113,7 +113,7 @@ final class AphrontFileResponse extends AphrontResponse {
       $headers[] = array('Content-Length', $content_len);
     }
 
-    if (strlen($this->getDownload())) {
+    if (phutil_nonempty_string($this->getDownload())) {
       $headers[] = array('X-Download-Options', 'noopen');
 
       $filename = $this->getDownload();
@@ -150,7 +150,7 @@ final class AphrontFileResponse extends AphrontResponse {
       $begin = (int)$matches[1];
 
       // The "Range" may be "200-299" or "200-", meaning "until end of file".
-      if (strlen($matches[2])) {
+      if (phutil_nonempty_string($matches[2])) {
         $range_end = (int)$matches[2];
         $end = $range_end + 1;
       } else {

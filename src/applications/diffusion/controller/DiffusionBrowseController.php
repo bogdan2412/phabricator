@@ -22,7 +22,7 @@ final class DiffusionBrowseController extends DiffusionController {
     // list.
 
     $grep = $request->getStr('grep');
-    if (strlen($grep)) {
+    if (phutil_nonempty_string($grep)) {
       return $this->browseSearch();
     }
 
@@ -377,7 +377,7 @@ final class DiffusionBrowseController extends DiffusionController {
         $results = array();
         break;
       default:
-        if (strlen($this->getRequest()->getStr('grep'))) {
+        if (phutil_nonempty_string($this->getRequest()->getStr('grep'))) {
           $search_mode = 'grep';
           $query_string = $request->getStr('grep');
           $results = $this->callConduitWithDiffusionRequest(
@@ -903,7 +903,7 @@ final class DiffusionBrowseController extends DiffusionController {
       $tags = mpull($tags, null, 'getName');
       $tag = idx($tags, $symbolic);
 
-      if ($tag && strlen($tag->getMessage())) {
+      if ($tag && phutil_nonempty_string($tag->getMessage())) {
         $view->addSectionHeader(
           pht('Tag Content'), 'fa-tag');
         $view->addTextContent($this->markupText($tag->getMessage()));

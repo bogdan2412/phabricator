@@ -17,7 +17,7 @@ final class PhabricatorSearchDateField
   }
 
   protected function validateControlValue($value) {
-    if (!strlen($value)) {
+    if (!phutil_nonempty_string($value)) {
       return;
     }
 
@@ -32,7 +32,7 @@ final class PhabricatorSearchDateField
   }
 
   protected function parseDateTime($value) {
-    if (!strlen($value)) {
+    if (!phutil_nonempty_string($value)) {
       return null;
     }
 

@@ -37,7 +37,7 @@ final class DiffusionBrowseQueryConduitAPIMethod
     $repository = $drequest->getRepository();
 
     $path = $request->getValue('path');
-    if (!strlen($path) || $path === '/') {
+    if (!phutil_nonempty_string($path) || $path === '/') {
       $path = null;
     }
 
@@ -295,11 +295,11 @@ final class DiffusionBrowseQueryConduitAPIMethod
       if (strncmp($path, $match_against, $match_len)) {
         continue;
       }
-      if (!strlen($path)) {
+      if (!phutil_nonempty_string($path)) {
         continue;
       }
       $remainder = substr($path, $trim_len);
-      if (!strlen($remainder)) {
+      if (!phutil_nonempty_string($remainder)) {
         // There is a file with this exact name in the manifest, so clearly
         // it's a file.
         $result->setReasonForEmptyResultSet(

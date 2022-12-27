@@ -39,13 +39,13 @@ final class DifferentialBranchField
     $branch = $diff->getBranch();
     $bookmark = $diff->getBookmark();
 
-    if (strlen($branch) && strlen($bookmark)) {
+    if (phutil_nonempty_string($branch) && phutil_nonempty_string($bookmark)) {
       return pht('%s (bookmark) on %s (branch)', $bookmark, $branch);
-    } else if (strlen($bookmark)) {
+    } else if (phutil_nonempty_string($bookmark)) {
       return pht('%s (bookmark)', $bookmark);
-    } else if (strlen($branch)) {
+    } else if (phutil_nonempty_string($branch)) {
       $onto = $diff->loadTargetBranch();
-      if (strlen($onto) && ($onto !== $branch)) {
+      if (phutil_nonempty_string($onto) && ($onto !== $branch)) {
         return pht(
           '%s (branched from %s)',
           $branch,

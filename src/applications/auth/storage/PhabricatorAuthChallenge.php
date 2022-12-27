@@ -57,13 +57,13 @@ final class PhabricatorAuthChallenge
     assert_instances_of($challenges, __CLASS__);
 
     $token_list = $request->getStr(self::HTTPKEY);
-    $token_list = explode(' ', $token_list);
+    $token_list = explode(' ', is_null($token_list) ? '' : $token_list);
 
     $token_map = array();
     foreach ($token_list as $token_element) {
       $token_element = trim($token_element, ' ');
 
-      if (!strlen($token_element)) {
+      if (!phutil_nonempty_string($token_element)) {
         continue;
       }
 

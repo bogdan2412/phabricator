@@ -325,7 +325,7 @@ final class DifferentialChangeset
 
   public function getOldStatePathVector() {
     $path = $this->getOldFile();
-    if (!strlen($path)) {
+    if (!phutil_nonempty_string($path)) {
       $path = $this->getFilename();
     }
 
@@ -759,7 +759,7 @@ final class DifferentialChangeset
     }
 
     $absolute_path = $this->getAbsoluteRepositoryPath($repository, $diff);
-    if (strlen($absolute_path)) {
+    if (phutil_nonempty_string($absolute_path)) {
       $absolute_path = base64_encode($absolute_path);
     } else {
       $absolute_path = null;

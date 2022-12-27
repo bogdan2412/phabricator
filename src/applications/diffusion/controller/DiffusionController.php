@@ -97,19 +97,19 @@ abstract class DiffusionController extends PhabricatorController {
     AphrontRequest $request) {
 
     $short_name = $request->getURIData('repositoryShortName');
-    if (strlen($short_name)) {
+    if (phutil_nonempty_string($short_name)) {
       // If the short name ends in ".git", ignore it.
       $short_name = preg_replace('/\\.git\z/', '', $short_name);
       return $short_name;
     }
 
     $identifier = $request->getURIData('repositoryCallsign');
-    if (strlen($identifier)) {
+    if (phutil_nonempty_string($identifier)) {
       return $identifier;
     }
 
     $id = $request->getURIData('repositoryID');
-    if (strlen($id)) {
+    if (phutil_nonempty_string($id)) {
       return (int)$id;
     }
 
@@ -153,7 +153,7 @@ abstract class DiffusionController extends PhabricatorController {
 
     if (!$spec['commit'] && !$spec['tags'] && !$spec['branches']) {
       $branch_name = $drequest->getBranch();
-      if (strlen($branch_name)) {
+      if (phutil_nonempty_string($branch_name)) {
         $repository_name .= ' ('.$branch_name.')';
       }
     }
@@ -434,7 +434,7 @@ abstract class DiffusionController extends PhabricatorController {
     }
 
     $readme_corpus = $readme_cache['corpus'];
-    if (!strlen($readme_corpus)) {
+    if (!phutil_nonempty_string($readme_corpus)) {
       return null;
     }
 

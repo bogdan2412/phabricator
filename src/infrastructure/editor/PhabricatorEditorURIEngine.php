@@ -16,7 +16,7 @@ final class PhabricatorEditorURIEngine
 
     $pattern = $viewer->getUserSetting(PhabricatorEditorSetting::SETTINGKEY);
 
-    if (!strlen(trim($pattern))) {
+    if (is_null($pattern) || !strlen(trim($pattern))) {
       return null;
     }
 
