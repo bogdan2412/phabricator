@@ -1022,7 +1022,7 @@ final class PhabricatorApplicationSearchController
     $object_name = pht('%s %s', $object->getMonogram(), $object->getName());
 
     // Likewise, the context object can only be a dashboard.
-    if ($context_phid !== null && !strlen($context_phid)) {
+    if ($context_phid !== null && strlen($context_phid)) {
       $context = id(new PhabricatorDashboardQuery())
         ->setViewer($viewer)
         ->withPHIDs(array($context_phid))

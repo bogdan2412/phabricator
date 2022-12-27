@@ -171,7 +171,7 @@ abstract class AphrontFormControl extends AphrontView {
       array('class' => 'aphront-form-input'),
       $this->renderInput());
 
-    $error = $this->error;
+    $error = $this->getError();
     if ($error !== null && strlen($error)) {
       if ($error === true) {
         $error = phutil_tag(
@@ -188,7 +188,7 @@ abstract class AphrontFormControl extends AphrontView {
       $error = null;
     }
 
-    $label = $this->label;
+    $label = $this->getLabel();
     if ($label !== null && strlen($label)) {
       $label = phutil_tag(
         'label',
@@ -205,7 +205,7 @@ abstract class AphrontFormControl extends AphrontView {
       $custom_class .= ' aphront-form-control-nolabel';
     }
 
-    $caption = $this->caption;
+    $caption = $this->getCaption();
     if ($caption !== null && strlen($caption)) {
       $caption = phutil_tag(
         'div',

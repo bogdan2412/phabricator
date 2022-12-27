@@ -40,7 +40,7 @@ final class PhabricatorManageProfileMenuItem
         ->setKey('name')
         ->setLabel(pht('Name'))
         ->setPlaceholder($this->getDefaultName())
-        ->setValue($this->getNameFromConfig($config)),
+        ->setValue($config->getMenuItemProperty('name')),
     );
   }
 

@@ -98,7 +98,7 @@ final class PhabricatorAuthStartController
     }
 
     $next_uri = $request->getStr('next');
-    if (phutil_nonempty_string($next_uri)) {
+    if (!phutil_nonempty_string($next_uri)) {
       if ($this->getDelegatingController()) {
         // Only set a next URI from the request path if this controller was
         // delegated to, which happens when a user tries to view a page which

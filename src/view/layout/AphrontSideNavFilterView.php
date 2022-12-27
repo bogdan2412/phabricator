@@ -101,7 +101,7 @@ final class AphrontSideNavFilterView extends AphrontView {
       $item->setIcon($icon);
     }
 
-    if (strlen($key)) {
+    if (phutil_nonempty_string($key)) {
       $item->setKey($key);
     }
 

@@ -239,7 +239,7 @@ final class PhabricatorProfileMenuItemConfiguration
   }
 
   public function matchesIdentifier($identifier) {
-    if (!strlen($identifier)) {
+    if (!phutil_nonempty_string($identifier)) {
       return false;
     }
 

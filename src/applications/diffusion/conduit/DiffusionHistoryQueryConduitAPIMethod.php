@@ -61,8 +61,10 @@ final class DiffusionHistoryQueryConduitAPIMethod
 
     $argv = array();
 
-    $argv[] = '--skip';
-    $argv[] = $offset;
+    if ($offset !== null) {
+      $argv[] = '--skip';
+      $argv[] = $offset;
+    }
 
     $argv[] = '--max-count';
     $argv[] = $limit;

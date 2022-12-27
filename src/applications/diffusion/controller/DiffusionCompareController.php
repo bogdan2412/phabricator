@@ -32,14 +32,14 @@ final class DiffusionCompareController extends DiffusionController {
 
     $must_prompt = false;
     if (!$request->isFormPost()) {
-      if (!strlen($head_ref)) {
+      if (!phutil_nonempty_string($head_ref)) {
         $head_ref = $drequest->getSymbolicCommit();
-        if (!strlen($head_ref)) {
+        if (!phutil_nonempty_string($head_ref)) {
           $head_ref = $drequest->getBranch();
         }
       }
 
-      if (!strlen($against_ref)) {
+      if (!phutil_nonempty_string($against_ref)) {
         $default_branch = $repository->getDefaultBranch();
         if ($default_branch != $head_ref) {
           $against_ref = $default_branch;
@@ -176,7 +176,7 @@ final class DiffusionCompareController extends DiffusionController {
     $e_against = null;
     $errors = array();
     if ($request->isFormPost()) {
-      if (!strlen($head_ref)) {
+      if (!phutil_nonempty_string($head_ref)) {
         $e_head = pht('Required');
         $errors[] = pht(
           'You must provide two different commits to compare.');
@@ -187,7 +187,7 @@ final class DiffusionCompareController extends DiffusionController {
           $head_ref);
       }
 
-      if (!strlen($against_ref)) {
+      if (!phutil_nonempty_string($against_ref)) {
         $e_against = pht('Required');
         $errors[] = pht(
           'You must provide two different commits to compare.');

@@ -1292,7 +1292,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
   public function setCustomAltText($value) {
     $value = phutil_string_cast($value);
 
-    if (!strlen($value)) {
+    if (!phutil_nonempty_string($value)) {
       $value = null;
     }
 

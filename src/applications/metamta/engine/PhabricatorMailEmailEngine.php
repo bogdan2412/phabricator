@@ -508,7 +508,7 @@ final class PhabricatorMailEmailEngine
   public function newDefaultEmailAddress() {
     $raw_address = PhabricatorEnv::getEnvConfig('metamta.default-address');
 
-    if ($raw_address == null || !strlen($raw_address)) {
+    if ($raw_address === null || !strlen($raw_address)) {
       $domain = $this->newMailDomain();
       $raw_address = "noreply@{$domain}";
     }

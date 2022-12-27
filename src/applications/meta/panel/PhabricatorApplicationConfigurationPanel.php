@@ -28,7 +28,7 @@ abstract class PhabricatorApplicationConfigurationPanel
     $app_key = get_class($this->getApplication());
     $panel_key = $this->getPanelKey();
     $base = "/applications/panel/{$app_key}/{$panel_key}/";
-    return $base.ltrim($path, '/');
+    return $base.ltrim(phutil_nonempty_string($path) ? $path : '', '/');
   }
 
   /**

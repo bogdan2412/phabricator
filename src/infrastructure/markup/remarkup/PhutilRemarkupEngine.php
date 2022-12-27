@@ -157,7 +157,7 @@ final class PhutilRemarkupEngine extends PhutilMarkupEngine {
     // Apply basic block and paragraph normalization to the text. NOTE: We don't
     // strip trailing whitespace because it is semantic in some contexts,
     // notably inlined diffs that the author intends to show as a code block.
-    $text = phutil_split_lines($text, true);
+    $text = phutil_split_lines(phutil_nonempty_string($text) ? $text : '', true);
     $block_rules = $this->blockRules;
     $blocks = array();
     $cursor = 0;

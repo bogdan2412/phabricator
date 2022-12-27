@@ -10,7 +10,7 @@ final class PhabricatorTypeaheadModularDatasourceController
   public function handleRequest(AphrontRequest $request) {
     $request = $this->getRequest();
     $viewer = $request->getUser();
-    $query = $request->getStr('q');
+    $query = nonempty($request->getStr('q'), '');
     $offset = $request->getInt('offset');
     $select_phid = null;
     $is_browse = ($request->getURIData('action') == 'browse');

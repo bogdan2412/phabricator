@@ -608,7 +608,7 @@ final class PhabricatorDatabaseRef
   public static function newIndividualRef() {
     $default_user = PhabricatorEnv::getEnvConfig('mysql.user');
     $default_pass = new PhutilOpaqueEnvelope(
-      PhabricatorEnv::getEnvConfig('mysql.pass'));
+      phutil_string_cast(PhabricatorEnv::getEnvConfig('mysql.pass')));
     $default_host = PhabricatorEnv::getEnvConfig('mysql.host');
     $default_port = PhabricatorEnv::getEnvConfig('mysql.port');
 

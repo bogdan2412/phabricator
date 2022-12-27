@@ -250,6 +250,10 @@ final class PhabricatorAuditManagementDeleteWorkflow
   }
 
   private function parseList($list) {
+    if ($list === null) {
+      return array();
+    }
+
     $list = preg_split('/\s*,\s*/', $list);
 
     foreach ($list as $key => $item) {
