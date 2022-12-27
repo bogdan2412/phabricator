@@ -153,7 +153,7 @@ abstract class DiffusionController extends PhabricatorController {
 
     if (!$spec['commit'] && !$spec['tags'] && !$spec['branches']) {
       $branch_name = $drequest->getBranch();
-      if (strlen($branch_name)) {
+      if (phutil_nonempty_string($branch_name)) {
         $repository_name .= ' ('.$branch_name.')';
       }
     }
@@ -437,7 +437,7 @@ abstract class DiffusionController extends PhabricatorController {
     }
 
     $readme_corpus = $readme_cache['corpus'];
-    if (!strlen($readme_corpus)) {
+    if (!phutil_nonempty_string($readme_corpus)) {
       return null;
     }
 

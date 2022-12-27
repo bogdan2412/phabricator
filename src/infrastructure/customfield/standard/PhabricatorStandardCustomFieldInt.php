@@ -32,7 +32,7 @@ final class PhabricatorStandardCustomFieldInt
   }
 
   public function setValueFromStorage($value) {
-    if (strlen($value)) {
+    if ($value !== null && strlen($value)) {
       $value = (int)$value;
     } else {
       $value = null;

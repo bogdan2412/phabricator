@@ -220,7 +220,7 @@ final class DiffusionRepositoryBasicsManagementPanel
     $view->addProperty(pht('Type'), $type);
 
     $callsign = $repository->getCallsign();
-    if (!strlen($callsign)) {
+    if ($callsign === null || !strlen($callsign)) {
       $callsign = phutil_tag('em', array(), pht('No Callsign'));
     }
     $view->addProperty(pht('Callsign'), $callsign);

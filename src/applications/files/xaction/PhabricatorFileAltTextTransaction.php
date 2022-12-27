@@ -27,7 +27,7 @@ final class PhabricatorFileAltTextTransaction
     $old_value = $this->getOldValue();
     $new_value = $this->getNewValue();
 
-    if ($old_value == null || !strlen($old_value)) {
+    if ($old_value === null || !strlen($old_value)) {
       return pht(
         '%s set the alternate text for this file to %s.',
         $this->renderAuthor(),

@@ -217,7 +217,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
     $monograms[] = 'R'.$this->getID();
 
     $callsign = $this->getCallsign();
-    if (strlen($callsign)) {
+    if (phutil_nonempty_string($callsign)) {
       $monograms[] = 'r'.$callsign;
     }
 
@@ -368,7 +368,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
   }
 
   public static function assertValidRepositorySlug($slug) {
-    if (!strlen($slug)) {
+    if (!phutil_nonempty_string($slug)) {
       throw new Exception(
         pht(
           'The empty string is not a valid repository short name. '.
@@ -444,7 +444,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
   }
 
   public static function assertValidCallsign($callsign) {
-    if (!strlen($callsign)) {
+    if (!phutil_nonempty_string($callsign)) {
       throw new Exception(
         pht(
           'A repository callsign must be at least one character long.'));
@@ -792,7 +792,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
         }
         break;
       case 'branch':
-        if ($path != null && strlen($path)) {
+        if ($path !== null && strlen($path)) {
           $uri = $this->getPathURI("/repository/{$path}");
         } else {
           $uri = $this->getPathURI('/');
@@ -2302,14 +2302,14 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
       );
       foreach ($git_env as $key) {
         $value = getenv($key);
-        if (strlen($value)) {
+        if ($value !== null && strlen($value)) {
           $env[$key] = $value;
         }
       }
 
       $key = 'GIT_PUSH_OPTION_COUNT';
       $git_count = getenv($key);
-      if (strlen($git_count)) {
+      if ($git_count !== null && strlen($git_count)) {
         $git_count = (int)$git_count;
         $env[$key] = $git_count;
         for ($ii = 0; $ii < $git_count; $ii++) {
@@ -2850,7 +2850,7 @@ final class PhabricatorRepository extends PhabricatorRepositoryDAO
 
     foreach ($list as $key => $value) {
       $value = (string)$value;
-      if (!strlen($value)) {
+      if (!phutil_nonempty_string($value)) {
         unset($list[$key]);
       }
     }

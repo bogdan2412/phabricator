@@ -894,7 +894,7 @@ final class PHUIObjectItemView extends AphrontTagView {
       'style' => 'background-image: url('.$handle->getImageURI().')',
     );
 
-    if (strlen($label)) {
+    if (phutil_nonempty_string($label)) {
       $options['sigil'] = 'has-tooltip';
       $options['meta']  = array('tip' => $label, 'align' => 'E');
     }

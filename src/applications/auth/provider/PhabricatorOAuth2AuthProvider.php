@@ -20,7 +20,8 @@ abstract class PhabricatorOAuth2AuthProvider
     $adapter->setClientID($config->getProperty(self::PROPERTY_APP_ID));
     $adapter->setClientSecret(
       new PhutilOpaqueEnvelope(
-        $config->getProperty(self::PROPERTY_APP_SECRET)));
+        phutil_string_cast(
+          $config->getProperty(self::PROPERTY_APP_SECRET))));
     $adapter->setRedirectURI(PhabricatorEnv::getURI($this->getLoginURI()));
     return $adapter;
   }
@@ -64,7 +65,7 @@ abstract class PhabricatorOAuth2AuthProvider
     $this->verifyAuthCSRFCode($request, $request->getStr('state'));
 
     $code = $request->getStr('code');
-    if (!strlen($code)) {
+    if (!phutil_nonempty_string($code)) {
       $response = $controller->buildProviderErrorResponse(
         $this,
         pht(
@@ -137,7 +138,7 @@ abstract class PhabricatorOAuth2AuthProvider
 
     switch ($key) {
       case self::PROPERTY_APP_ID:
-        if (strlen($old)) {
+        if (phutil_nonempty_string($old)) {
           return pht(
             '%s updated the OAuth application ID for this provider from '.
             '"%s" to "%s".',
@@ -152,7 +153,7 @@ abstract class PhabricatorOAuth2AuthProvider
             $new);
         }
       case self::PROPERTY_APP_SECRET:
-        if (strlen($old)) {
+        if (phutil_nonempty_string($old)) {
           return pht(
             '%s updated the OAuth application secret for this provider.',
             $xaction->renderHandleLink($author_phid));
@@ -162,7 +163,7 @@ abstract class PhabricatorOAuth2AuthProvider
             $xaction->renderHandleLink($author_phid));
         }
       case self::PROPERTY_NOTE:
-        if (strlen($old)) {
+        if (phutil_nonempty_string($old)) {
           return pht(
             '%s updated the OAuth application notes for this provider.',
             $xaction->renderHandleLink($author_phid));

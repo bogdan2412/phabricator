@@ -10,7 +10,7 @@ final class PhabricatorRepositorySlugTransaction
   }
 
   public function generateNewValue($object, $value) {
-    if (strlen($value)) {
+    if ($value !== null && strlen($value)) {
       return $value;
     }
 
@@ -25,11 +25,11 @@ final class PhabricatorRepositorySlugTransaction
     $old = $this->getOldValue();
     $new = $this->getNewValue();
 
-    if (strlen($old) && !strlen($new)) {
+    if (($old !== null && strlen($old)) && ($new === null || !strlen($new))) {
       return pht(
         '%s removed the short name of this repository.',
         $this->renderAuthor());
-    } else if (strlen($new) && !strlen($old)) {
+    } else if (($new !== null && strlen($new)) && ($old === null || !strlen($old))) {
       return pht(
         '%s set the short name of this repository to %s.',
         $this->renderAuthor(),
@@ -50,7 +50,7 @@ final class PhabricatorRepositorySlugTransaction
       $old = $xaction->getOldValue();
       $new = $xaction->getNewValue();
 
-      if (!strlen($new)) {
+      if ($new === null || !strlen($new)) {
         continue;
       }
 

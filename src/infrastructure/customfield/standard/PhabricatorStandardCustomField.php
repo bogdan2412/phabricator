@@ -268,7 +268,7 @@ abstract class PhabricatorStandardCustomField
 
   public function readValueFromRequest(AphrontRequest $request) {
     $value = $request->getStr($this->getFieldKey());
-    if (!strlen($value)) {
+    if ($value !== null && !strlen($value)) {
       $value = null;
     }
     $this->setFieldValue($value);

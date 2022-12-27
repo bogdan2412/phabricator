@@ -270,7 +270,7 @@ final class PhabricatorConfigConsoleController
         list($err, $stdout) = $upstream_future->resolve();
         if (!$err) {
           $branchpoint = trim($stdout);
-          if (strlen($branchpoint)) {
+          if (phutil_nonempty_string($branchpoint)) {
             // We only list a branchpoint if it differs from HEAD.
             if ($branchpoint != $hash) {
               $result['upstream'] = $lib_upstreams[$lib];
