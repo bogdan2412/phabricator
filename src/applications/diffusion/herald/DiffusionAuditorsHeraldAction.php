@@ -20,12 +20,18 @@ abstract class DiffusionAuditorsHeraldAction
 
     $auditors = $object->getAudits();
 
-    // Don't try to add commit authors as auditors.
+    $can_author_audit_key = 'audit.can-author-close-audit';
+    $can_author_audit = PhabricatorEnv::getEnvConfig($can_author_audit_key);
+
+    // Don't try to add commit authors as auditors if they're not allowed to
+    // audit.
     $authors = array();
-    foreach ($phids as $key => $phid) {
-      if ($phid == $object->getAuthorPHID()) {
-        $authors[] = $phid;
-        unset($phids[$key]);
+    if (!$can_author_audit) {
+      foreach ($phids as $key => $phid) {
+        if ($phid == $object->getAuthorPHID()) {
+          $authors[] = $phid;
+          unset($phids[$key]);
+        }
       }
     }
 
