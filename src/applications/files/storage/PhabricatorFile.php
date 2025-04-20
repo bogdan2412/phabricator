@@ -1256,7 +1256,7 @@ final class PhabricatorFile extends PhabricatorFileDAO
     return $this->assertAttached($this->originalFile);
   }
 
-  public function attachOriginalFile(PhabricatorFile $file = null) {
+  public function attachOriginalFile(?PhabricatorFile $file = null) {
     $this->originalFile = $file;
     return $this;
   }

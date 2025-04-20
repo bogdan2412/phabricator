@@ -98,7 +98,7 @@ final class PassphraseCredentialEditController extends PassphraseController {
       $env_secret = new PhutilOpaqueEnvelope($v_secret);
       $env_password = new PhutilOpaqueEnvelope($v_password);
 
-      $has_secret = !preg_match('/^('.$bullet.')+$/', trim($v_decrypt));
+      $has_secret = $v_decrypt === null || !preg_match('/^('.$bullet.')+$/', trim($v_decrypt));
 
       // Validate and repair SSH private keys, and apply passwords if they
       // are provided. See T13454 for discussion.
